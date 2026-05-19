@@ -3,7 +3,10 @@ fn main() {
 
 	println!("Binary: {}", bin);
 
-	bin_to_base("010010000110100100100001");
+	let base = bin_to_base(bin.as_str());
+	println!("Base64: {}", base);
+
+	base_to_bin("SGkh");
 }
 
 fn hex_to_bin(input: &str) -> String {
@@ -59,8 +62,23 @@ fn bin_to_base(bin: &str) -> String {
 	//merge into single string
 	let result = chars.join("");
 
-	println!{"{}", result};
-	
 	return result;	
 }
 
+fn base_to_bin(bin: &str) -> String {
+	//split string to char array
+	let chars: Vec<char> = bin.chars().collect();
+
+	let alph_map: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"; 
+	
+	//convert chars to numbers using mapping
+	let chunks: Vec<u32> = chars.iter().map(|&c| alph_map.find(c).map(|n| n as u32).unwrap_or(0)).collect();
+
+	//convert numbers to binary
+	let bin_chunks: Vec<String> = chunks.iter().map(|n| format!("{:0>6}", format!("{:b}", n)).to_string()).collect();
+
+	let result = bin_chunks.join("");
+		
+	return result;
+
+}
