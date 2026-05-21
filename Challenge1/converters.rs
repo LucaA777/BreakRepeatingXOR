@@ -20,7 +20,7 @@ fn main() {
 	println!("Hex: {}", hex);
 }
 
-fn hex_to_bin(input: &str) -> String {
+pub fn hex_to_bin(input: &str) -> String {
 	//add leading zero to hex number if it's not padded
 	let hex: String = if input.len() % 2 != 0 {
 		format!("0{}", input)
@@ -34,7 +34,7 @@ fn hex_to_bin(input: &str) -> String {
 	return binary;
 }
 
-fn bin_to_base(bin: &str) -> String {
+pub fn bin_to_base(bin: &str) -> String {
 	let alph_map: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"; 
 
 	//convert binary to bytes
@@ -78,7 +78,7 @@ fn bin_to_base(bin: &str) -> String {
 	return result;	
 }
 
-fn base_to_bin(base: &str) -> String {
+pub fn base_to_bin(base: &str) -> String {
 	//split string to char array
 	let chars: Vec<char> = base.chars().collect();
 
@@ -96,7 +96,7 @@ fn base_to_bin(base: &str) -> String {
 
 }
 
-fn bin_to_hex(bin: &str) -> String {
+pub fn bin_to_hex(bin: &str) -> String {
 	//split into 8 bit chunks
 	let bytes = bin.as_bytes();
 	let bin_chunks: Vec<&str> = bytes.chunks(8)
