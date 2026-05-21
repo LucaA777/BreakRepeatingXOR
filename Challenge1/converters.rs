@@ -130,3 +130,15 @@ pub fn byte_to_char(byte: u8) -> char {
 
 	return plain;
 }
+
+pub fn byte_to_bin(byte: u8) -> String {
+	let bin: String = format!("{:b}", byte);
+
+	return bin;
+}
+
+pub fn bin_to_byte(bin: &str) -> u8 {
+	let byte: u8 = u8::from_str_radix(bin, 2).unwrap();
+
+	return byte;
+}

@@ -31,3 +31,28 @@ pub fn fixedXOR_hex(in1: &str, in2: &str) -> String {
 
 	return hex_result;
 }
+
+pub fn fixedXOR_byte(byte1: u8, byte2: u8) -> u8 {
+	//convert byte to bin
+	let bin1 = converters::byte_to_bin(byte1);
+	let bin2 = converters::byte_to_bin(byte2);
+
+	//perform xor
+	let XOR: Vec<char> = bin1.chars().zip(bin2.chars()).map(|(b1, b2)| {
+		if b1 == b2 {
+		'0'
+		}
+		else {
+		'1'
+		}
+	}).collect();
+
+	//combine vector to string
+	let result: String = XOR.iter().collect();
+
+	//convert back to bytes
+	let byte_result = converters::bin_to_byte(result.as_str());
+
+	return byte_result;	
+
+}
