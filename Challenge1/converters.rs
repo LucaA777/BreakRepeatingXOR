@@ -6,7 +6,18 @@ fn main() {
 	let base = bin_to_base(bin.as_str());
 	println!("Base64: {}", base);
 
-	base_to_bin("SGkh");
+	let bin_again = base_to_bin(base.as_str());
+
+	println!("Binary: {}", bin_again);
+
+	//compare bin and bin_again
+	if bin == bin_again {
+		println!("binary match!");
+	}
+
+	let hex = bin_to_hex(bin_again.as_str());
+	
+	println!("Hex: {}", hex);
 }
 
 fn hex_to_bin(input: &str) -> String {
@@ -53,6 +64,8 @@ fn bin_to_base(bin: &str) -> String {
 				.sum::<u32>())
 		.collect();
 
+	println!("{:?}", chunks);
+	
 	//convert base ten with map
 	let chars: Vec<String> = chunks.iter().map(|&n| {
 		let byte = alph_map.as_bytes()[n as usize];
@@ -65,9 +78,9 @@ fn bin_to_base(bin: &str) -> String {
 	return result;	
 }
 
-fn base_to_bin(bin: &str) -> String {
+fn base_to_bin(base: &str) -> String {
 	//split string to char array
-	let chars: Vec<char> = bin.chars().collect();
+	let chars: Vec<char> = base.chars().collect();
 
 	let alph_map: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"; 
 	
@@ -81,4 +94,27 @@ fn base_to_bin(bin: &str) -> String {
 		
 	return result;
 
+}
+
+fn bin_to_hex(bin: &str) -> String {
+	//split into 8 bit chunks
+	let bytes = bin.as_bytes();
+	let bin_chunks: Vec<&str> = bytes.chunks(8)
+		.map(|chunk| std::str::from_utf8(chunk).unwrap())
+		.collect();
+
+	//convert from binary to numbers
+	let chunks: Vec<u32> = bin_chunks.iter()
+		.map(|chunk| chunk.chars()
+				.rev()
+				.enumerate()
+				.filter(|&(_, c)| c == '1')
+				.map(|(i, _)| 2u32.pow(i as u32))
+				.sum::<u32>())
+		.collect();
+	
+	//convert bytes into hex
+	let hex: String = chunks.iter().map(|c| format!("{:02x}", c)).collect();
+
+	return hex;
 }
