@@ -118,3 +118,15 @@ pub fn bin_to_hex(bin: &str) -> String {
 
 	return hex;
 }
+
+pub fn char_to_byte(plain: char) -> u8 {
+	let byte = plain as u8;
+
+	return byte;
+}
+
+pub fn byte_to_char(byte: u8) -> char {
+	let plain = byte as char;
+
+	return plain;
+}
