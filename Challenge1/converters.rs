@@ -64,8 +64,6 @@ pub fn bin_to_base(bin: &str) -> String {
 				.sum::<u32>())
 		.collect();
 
-	println!("{:?}", chunks);
-	
 	//convert base ten with map
 	let chars: Vec<String> = chunks.iter().map(|&n| {
 		let byte = alph_map.as_bytes()[n as usize];
@@ -119,6 +117,18 @@ pub fn bin_to_hex(bin: &str) -> String {
 	return hex;
 }
 
+pub fn hex_to_plain(hex: &str) -> String {
+	let bin = hex_to_bin(hex);
+
+	let bytes: Vec<u8> = bin.as_bytes().chunks(8).map(|b| bin_to_byte(std::str::from_utf8(b).unwrap())).collect();
+
+	let chars: Vec<char> = bytes.iter().map(|b| byte_to_char(*b)).collect();
+
+	let result = chars.iter().collect();
+
+	return result;
+}
+
 pub fn char_to_byte(plain: char) -> u8 {
 	let byte = plain as u8;
 
@@ -132,7 +142,7 @@ pub fn byte_to_char(byte: u8) -> char {
 }
 
 pub fn byte_to_bin(byte: u8) -> String {
-	let bin: String = format!("{:b}", byte);
+	let bin: String = format!("{:0>8}", format!("{:b}", byte));
 
 	return bin;
 }
